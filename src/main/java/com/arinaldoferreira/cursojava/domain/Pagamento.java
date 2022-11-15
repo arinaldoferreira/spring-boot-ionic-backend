@@ -11,6 +11,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.arinaldoferreira.cursojava.domain.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 //a classe é abstrata pq ela nunca pode ser instanciada
 //apenas suas sub-classes podem ser intanciadas
@@ -24,6 +25,7 @@ public abstract class Pagamento implements Serializable {
 	private Integer id;
 	private Integer estado;
 
+	@JsonBackReference
 	@OneToOne
 	@JoinColumn(name = "pedido_id")
 	@MapsId
