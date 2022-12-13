@@ -3,6 +3,7 @@ package com.arinaldoferreira.cursojava.services;
 import java.util.Date;
 import java.util.Optional;
 
+import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class PedidoService {
 	}
 
 	@Transactional
-	public Pedido insert(Pedido obj) {
+	public Pedido insert(Pedido obj) throws MessagingException {
 		obj.setId(null);
 		obj.setInstante(new Date());
 
@@ -75,7 +76,8 @@ public class PedidoService {
 		itemPedidoRepository.saveAll(obj.getItens());
 
 		//System.out.println(obj);
-		emailService.sendOrderConfirmationEmail(obj);
+		//emailService.sendOrderConfirmationEmail(obj);
+		emailService.sendOrderConfirmationHtmlEmail(obj);
 
 		return obj;
 	}

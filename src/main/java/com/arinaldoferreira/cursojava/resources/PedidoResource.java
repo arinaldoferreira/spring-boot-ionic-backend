@@ -2,6 +2,7 @@ package com.arinaldoferreira.cursojava.resources;
 
 import java.net.URI;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.arinaldoferreira.cursojava.domain.Categoria;
 import com.arinaldoferreira.cursojava.domain.Pedido;
-import com.arinaldoferreira.cursojava.dto.CategoriaDTO;
 import com.arinaldoferreira.cursojava.services.PedidoService;
 
 @RestController
@@ -33,7 +32,7 @@ public class PedidoResource {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj) throws MessagingException {
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 
