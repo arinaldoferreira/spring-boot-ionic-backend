@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Profile;
 
 import com.arinaldoferreira.cursojava.services.DBService;
 import com.arinaldoferreira.cursojava.services.EmailService;
-import com.arinaldoferreira.cursojava.services.MockEmailService;
 import com.arinaldoferreira.cursojava.services.SmtpEmailService;
 
 @Configuration
