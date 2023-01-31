@@ -22,7 +22,7 @@ import com.arinaldoferreira.cursojava.domain.enums.TipoCliente;
 import com.arinaldoferreira.cursojava.dto.ClienteDTO;
 import com.arinaldoferreira.cursojava.dto.ClienteNewDTO;
 import com.arinaldoferreira.cursojava.repositories.ClienteRepository;
-import  com.arinaldoferreira.cursojava.repositories.EnderecoRepository;
+import com.arinaldoferreira.cursojava.repositories.EnderecoRepository;
 import com.arinaldoferreira.cursojava.security.UserSS;
 import com.arinaldoferreira.cursojava.services.exceptions.AuthorizationException;
 import com.arinaldoferreira.cursojava.services.exceptions.DataIntegrityException;
@@ -113,6 +113,17 @@ public class ClienteService {
 	}
 	
 	public URI uploadProfilePicture(MultipartFile multipartFile) {
-		return s3Service.uploadFile(multipartFile);
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
+		URI uri = s3Service.uploadFile(multipartFile);
+		
+		Cliente cli = find(user.getId());
+		cli.setImageUrl(uri.toString());
+		repo.save(cli);
+		
+		return uri;
 	}
 }
