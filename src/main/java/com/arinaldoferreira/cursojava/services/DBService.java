@@ -25,7 +25,7 @@ import com.arinaldoferreira.cursojava.domain.enums.TipoCliente;
 import com.arinaldoferreira.cursojava.repositories.CategoriaRepository;
 import com.arinaldoferreira.cursojava.repositories.CidadeRepository;
 import com.arinaldoferreira.cursojava.repositories.ClienteRepository;
-import com.arinaldoferreira.cursojava.repositories.EderecoRepository;
+import com.arinaldoferreira.cursojava.repositories.EnderecoRepository;
 import com.arinaldoferreira.cursojava.repositories.EstadoRepository;
 import com.arinaldoferreira.cursojava.repositories.ItemPedidoRepository;
 import com.arinaldoferreira.cursojava.repositories.PagamentoRepository;
@@ -47,7 +47,7 @@ public class DBService {
 	@Autowired
 	private CidadeRepository cidadeRepository;
 	@Autowired
-	private EderecoRepository enderecoRepository;
+	private EnderecoRepository enderecoRepository;
 
 	@Autowired
 	private ClienteRepository clienteRepository;

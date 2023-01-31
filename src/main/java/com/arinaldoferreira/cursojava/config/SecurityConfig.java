@@ -23,44 +23,42 @@ import com.arinaldoferreira.cursojava.security.JWTAuthenticationFilter;
 import com.arinaldoferreira.cursojava.security.JWTAuthorizationFilter;
 import com.arinaldoferreira.cursojava.security.JWTUtil;
 
-@SuppressWarnings("deprecation")
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
 	@Autowired
-	private Environment env;
+    private Environment env;
 	
 	@Autowired
 	private JWTUtil jwtUtil;
-
+	
 	private static final String[] PUBLIC_MATCHERS = {
-		"/h2-console/**"
-
+			"/h2-console/**"
 	};
 
 	private static final String[] PUBLIC_MATCHERS_GET = {
-		"/produtos/**",
-		"/categorias/**"
+			"/produtos/**",
+			"/categorias/**"
 	};
-	
+
 	private static final String[] PUBLIC_MATCHERS_POST = {
 			"/clientes/**",
+			"/clientes/picture",
 			"/auth/forgot/**"
-		};
+	};
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		
-		if (Arrays.asList(env.getActiveProfiles()).contains("test"))
-		{
-			http.headers().frameOptions().disable();
-		}
-
+		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
+            http.headers().frameOptions().disable();
+        }
+		
 		http.cors().and().csrf().disable();
 		http.authorizeRequests()
 			.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
@@ -71,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
-
+	
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
